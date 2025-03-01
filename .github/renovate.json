@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "schedule": ["every weekend"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^@tauri"],
+      "groupName": "tauri packages"
+    },
+    {
+      "matchPackagePatterns": ["^@reduxjs", "react-redux"],
+      "groupName": "redux packages"
+    },
+    {
+      "matchPackagePatterns": ["^react", "^@types/react"],
+      "groupName": "react packages"
+    }
+  ],
+  "lockFileMaintenance": { "enabled": true, "automerge": true },
+  "prHourlyLimit": 4,
+  "prConcurrentLimit": 5,
+  "rangeStrategy": "pin",
+  "semanticCommits": "enabled"
+}
