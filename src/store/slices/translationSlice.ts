@@ -30,11 +30,11 @@ export const translateText = createAsyncThunk(
   async ({
     text,
     sourceLang,
-    targetLang
+    targetLang,
   }: {
     text: string;
     sourceLang?: string;
-    targetLang: string
+    targetLang: string;
   }) => {
     return await invoke<Translation>('translate', {
       text,
@@ -44,32 +44,26 @@ export const translateText = createAsyncThunk(
   }
 );
 
-export const fetchTranslationHistory = createAsyncThunk(
-  'translation/fetchHistory',
-  async () => {
-    return await invoke<Translation[]>('get_translation_history');
-  }
-);
+export const fetchTranslationHistory = createAsyncThunk('translation/fetchHistory', async () => {
+  return await invoke<Translation[]>('get_translation_history');
+});
 
-export const deleteTranslation = createAsyncThunk(
-  'translation/delete',
-  async (id: number) => {
-    const success = await invoke<boolean>('delete_translation', { id });
-    return { id, success };
-  }
-);
+export const deleteTranslation = createAsyncThunk('translation/delete', async (id: number) => {
+  const success = await invoke<boolean>('delete_translation', { id });
+  return { id, success };
+});
 
 const translationSlice = createSlice({
   name: 'translation',
   initialState,
   reducers: {
-    clearCurrentTranslation: (state) => {
+    clearCurrentTranslation: state => {
       state.currentTranslation = null;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(translateText.pending, (state) => {
+      .addCase(translateText.pending, state => {
         state.loading = true;
         state.error = null;
       })
@@ -88,7 +82,7 @@ const translationSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || '翻訳に失敗しました';
       })
-      .addCase(fetchTranslationHistory.pending, (state) => {
+      .addCase(fetchTranslationHistory.pending, state => {
         state.loading = true;
         state.error = null;
       })

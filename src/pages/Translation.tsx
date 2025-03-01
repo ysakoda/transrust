@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../store';
-import {
-  translateText,
-  fetchTranslationHistory
-} from '../store/slices/translationSlice';
+import { translateText, fetchTranslationHistory } from '../store/slices/translationSlice';
 import { RootState } from '../store/rootReducer';
-import {
-  fetchApiKeys,
-  registerApiKey
-} from '../store/slices/apiKeySlice';
+import { fetchApiKeys, registerApiKey } from '../store/slices/apiKeySlice';
 import TranslationForm from '../components/translation/TranslationForm';
 import TranslationResult from '../components/translation/TranslationResult';
 import ApiKeyForm from '../components/settings/ApiKeyForm';
@@ -27,11 +21,7 @@ const Translation: React.FC = () => {
     dispatch(fetchTranslationHistory());
   }, [dispatch]);
 
-  const handleTranslate = (
-    text: string,
-    sourceLang: string | undefined,
-    targetLang: string
-  ) => {
+  const handleTranslate = (text: string, sourceLang: string | undefined, targetLang: string) => {
     dispatch(translateText({ text, sourceLang, targetLang }));
   };
 
@@ -47,15 +37,10 @@ const Translation: React.FC = () => {
       {!hasDeeplApiKey && !showApiKeyForm ? (
         <div className="api-key-notice">
           <p>翻訳を使用するには、DeepL API キーを設定してください。</p>
-          <button onClick={() => setShowApiKeyForm(true)}>
-            API キーを設定する
-          </button>
+          <button onClick={() => setShowApiKeyForm(true)}>API キーを設定する</button>
         </div>
       ) : showApiKeyForm ? (
-        <ApiKeyForm
-          onSubmit={handleSubmitApiKey}
-          onCancel={() => setShowApiKeyForm(false)}
-        />
+        <ApiKeyForm onSubmit={handleSubmitApiKey} onCancel={() => setShowApiKeyForm(false)} />
       ) : (
         <>
           <TranslationForm onTranslate={handleTranslate} isLoading={loading} />

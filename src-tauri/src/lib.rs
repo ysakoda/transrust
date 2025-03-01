@@ -48,8 +48,13 @@ pub fn run() {
                 api_key_repo.clone(),
             ));
 
-            app.manage(translation_repo as Arc<dyn domain::repository::translation_repository::TranslationRepository>);
-            app.manage(api_key_repo as Arc<dyn domain::repository::api_key_repository::ApiKeyRepository>);
+            app.manage(
+                translation_repo
+                    as Arc<dyn domain::repository::translation_repository::TranslationRepository>,
+            );
+            app.manage(
+                api_key_repo as Arc<dyn domain::repository::api_key_repository::ApiKeyRepository>,
+            );
             app.manage(manage_api_key_use_case);
             app.manage(translate_text_use_case);
 

@@ -90,7 +90,9 @@ impl ApiKeyRepository for SqliteApiKeyRepository {
         let connection = self.db.get_connection();
         let conn = connection.lock().unwrap();
 
-        let id = api_key.id.ok_or_else(|| "IDが指定されていません".to_string())?;
+        let id = api_key
+            .id
+            .ok_or_else(|| "IDが指定されていません".to_string())?;
 
         let affected = conn
             .execute(

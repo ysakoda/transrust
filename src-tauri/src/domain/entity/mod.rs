@@ -1,2 +1,2 @@
-pub mod translation;
 pub mod api_key;
+pub mod translation;

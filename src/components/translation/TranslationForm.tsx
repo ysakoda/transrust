@@ -23,7 +23,7 @@ const TranslationForm: React.FC<TranslationFormProps> = ({ onTranslate, isLoadin
         <div className="language-selectors">
           <select
             value={sourceLang || ''}
-            onChange={(e) => setSourceLang(e.target.value || undefined)}
+            onChange={e => setSourceLang(e.target.value || undefined)}
           >
             <option value="">自動検出</option>
             <option value="JA">日本語</option>
@@ -36,11 +36,7 @@ const TranslationForm: React.FC<TranslationFormProps> = ({ onTranslate, isLoadin
             <option value="ZH">中国語</option>
           </select>
           <span className="arrow-icon">→</span>
-          <select
-            value={targetLang}
-            onChange={(e) => setTargetLang(e.target.value)}
-            required
-          >
+          <select value={targetLang} onChange={e => setTargetLang(e.target.value)} required>
             <option value="JA">日本語</option>
             <option value="EN">英語</option>
             <option value="DE">ドイツ語</option>
@@ -54,7 +50,7 @@ const TranslationForm: React.FC<TranslationFormProps> = ({ onTranslate, isLoadin
       </div>
       <textarea
         value={sourceText}
-        onChange={(e) => setSourceText(e.target.value)}
+        onChange={e => setSourceText(e.target.value)}
         placeholder="翻訳するテキストを入力してください"
         rows={6}
         required

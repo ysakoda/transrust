@@ -10,7 +10,10 @@ pub struct Database {
 
 impl Database {
     pub fn new(config: &Config) -> Result<Self, String> {
-        let app_name = config.product_name.clone().unwrap_or_else(|| "PolyglotDesk".to_string());
+        let app_name = config
+            .product_name
+            .clone()
+            .unwrap_or_else(|| "PolyglotDesk".to_string());
         let app_data_dir = dirs::data_dir()
             .ok_or_else(|| "アプリデータディレクトリを取得できませんでした".to_string())?
             .join(app_name);
@@ -23,8 +26,8 @@ impl Database {
         let db_path = app_data_dir.join("polyglot.db");
         let should_init = !Path::new(&db_path).exists();
 
-        let connection = Connection::open(db_path)
-            .map_err(|e| format!("データベース接続エラー: {}", e))?;
+        let connection =
+            Connection::open(db_path).map_err(|e| format!("データベース接続エラー: {}", e))?;
 
         let db = Self {
             connection: Arc::new(Mutex::new(connection)),
