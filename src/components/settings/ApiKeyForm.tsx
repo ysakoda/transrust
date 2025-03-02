@@ -24,6 +24,7 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onSubmit, onCancel }) => {
           <label>プロバイダー:</label>
           <select value={provider} onChange={e => setProvider(e.target.value)} required>
             <option value="deepl">DeepL</option>
+            <option value="google">Google翻訳</option>
           </select>
         </div>
         <div className="form-group">

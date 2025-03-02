@@ -26,8 +26,8 @@ const Translation: React.FC = () => {
     dispatch(fetchTranslationHistory());
   }, [dispatch]);
 
-  const handleTranslate = (text: string, sourceLang: string | undefined, targetLang: string) => {
-    dispatch(translateText({ text, sourceLang, targetLang }));
+  const handleTranslate = (text: string, sourceLang: string | undefined, targetLang: string, provider: string) => {
+    dispatch(translateText({ text, sourceLang, targetLang, provider }));
   };
 
   const handleSubmitApiKey = (provider: string, key: string) => {

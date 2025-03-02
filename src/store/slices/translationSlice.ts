@@ -31,15 +31,18 @@ export const translateText = createAsyncThunk(
     text,
     sourceLang,
     targetLang,
+    provider,
   }: {
     text: string;
     sourceLang?: string;
     targetLang: string;
+    provider?: string;
   }) => {
     return await invoke<Translation>('translate', {
       text,
       source_lang: sourceLang,
       targetLang,
+      provider,
     });
   }
 );

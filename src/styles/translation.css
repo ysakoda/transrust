@@ -123,6 +123,39 @@
   transform: none;
 }
 
+.provider-selector {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.provider-selector label {
+  color: #cdd6f4;
+  font-weight: 500;
+}
+
+.provider-selector select {
+  min-width: 150px;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  border: 1px solid #45475a;
+  border-radius: 6px;
+  padding: 0.6rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3e%3cpath fill='none' stroke='%23a6adc8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 9l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+}
+
+.provider-selector select:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 /* =====================
    3. 翻訳結果
    ===================== */
