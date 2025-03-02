@@ -1,5 +1,3 @@
-// src-tauri/src/domain/entity/translation.rs
-// 翻訳エンティティの定義
 use serde::{Deserialize, Serialize};
 use std::time::SystemTime;
 

@@ -1,4 +1,3 @@
-// src-tauri/src/adapter/controller/translation_controller.rs
 use crate::application::usecase::translate_text::TranslateTextUseCase;
 use crate::domain::entity::translation::Translation;
 use crate::domain::repository::translation_repository::TranslationRepository;
@@ -45,4 +44,18 @@ pub async fn delete_translation(
     repository: State<'_, Arc<dyn TranslationRepository>>,
 ) -> Result<bool, String> {
     repository.delete(id).await
+}
+
+#[tauri::command]
+pub async fn update_translation(
+    id: i64,
+    source_text: String,
+    translated_text: String,
+    source_lang: String,
+    target_lang: String,
+    use_case: State<'_, Arc<TranslateTextUseCase>>,
+) -> Result<bool, String> {
+    use_case
+        .update_translation(id, source_text, translated_text, source_lang, target_lang)
+        .await
 }

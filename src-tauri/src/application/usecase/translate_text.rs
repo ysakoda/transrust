@@ -26,7 +26,6 @@ impl TranslateTextUseCase {
         source_lang: Option<String>,
         target_lang: String,
     ) -> Result<Translation, String> {
-        // DeepL API キーを取得
         let api_key = self
             .api_key_repository
             .find_by_provider("deepl")
@@ -37,20 +36,44 @@ impl TranslateTextUseCase {
             return Err("DeepL API キーが無効になっています".to_string());
         }
 
-        // DeepLアダプターを使用して翻訳
         let deepl_adapter = DeepLAdapter::new(api_key.key);
         let translation = deepl_adapter
             .translate(text, source_lang, target_lang)
             .await
             .map_err(|e| format!("翻訳エラー: {}", e))?;
 
-        // 翻訳結果を保存
         let id = self.translation_repository.save(&translation).await?;
 
-        // IDを設定した翻訳結果を返す
         let mut result = translation;
         result.id = Some(id);
 
         Ok(result)
+    }
+
+    pub async fn update_translation(
+        &self,
+        id: i64,
+        source_text: String,
+        translated_text: String,
+        source_lang: String,
+        target_lang: String,
+    ) -> Result<bool, String> {
+        let existing = self
+            .translation_repository
+            .find_by_id(id)
+            .await?
+            .ok_or_else(|| format!("ID: {}の翻訳が見つかりません", id))?;
+
+        let updated = Translation {
+            id: Some(id),
+            source_text,
+            translated_text,
+            source_language: source_lang,
+            target_language: target_lang,
+            created_at: existing.created_at,
+            api_source: existing.api_source,
+        };
+
+        self.translation_repository.update(&updated).await
     }
 }

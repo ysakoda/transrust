@@ -14,9 +14,7 @@ impl ManageApiKeyUseCase {
     pub async fn register_api_key(&self, provider: String, key: String) -> Result<i64, String> {
         let api_key = ApiKey::new(provider.clone(), key);
 
-        // 既存のキーがあるか確認
         if let Some(existing_key) = self.api_key_repository.find_by_provider(&provider).await? {
-            // 既存のキーを更新
             let mut updated_key = existing_key;
             updated_key.key = api_key.key;
             updated_key.is_active = true;
@@ -25,7 +23,6 @@ impl ManageApiKeyUseCase {
             return Ok(updated_key.id.unwrap());
         }
 
-        // 新しいキーを保存
         self.api_key_repository.save(&api_key).await
     }
 
@@ -38,14 +35,12 @@ impl ManageApiKeyUseCase {
     }
 
     pub async fn toggle_api_key_status(&self, id: i64, active: bool) -> Result<bool, String> {
-        // IDからAPIキーを検索
         let api_keys = self.api_key_repository.find_all().await?;
         let api_key = api_keys
             .iter()
             .find(|k| k.id == Some(id))
             .ok_or_else(|| format!("ID: {}のAPIキーが見つかりません", id))?;
 
-        // ステータスを更新
         let mut updated_key = api_key.clone();
         updated_key.is_active = active;
 

@@ -1,5 +1,3 @@
-// src-tauri/src/domain/repository/api_key_repository.rs
-// APIキーリポジトリのインターフェース
 use crate::domain::entity::api_key::ApiKey;
 use std::result::Result;
 

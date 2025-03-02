@@ -9,7 +9,7 @@ use adapter::controller::{
     },
     translation_controller::{
         delete_translation, get_translation_by_id, get_translation_history, search_translations,
-        translate,
+        translate, update_translation,
     },
 };
 use application::usecase::{
@@ -71,7 +71,8 @@ pub fn run() {
             get_translation_history,
             get_translation_by_id,
             search_translations,
-            delete_translation
+            delete_translation,
+            update_translation
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
