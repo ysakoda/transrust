@@ -27,7 +27,7 @@ const HistorySearch: React.FC<HistorySearchProps> = ({ onSearch, initialValue = 
       <input
         type="text"
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={e => setSearchQuery(e.target.value)}
         placeholder="翻訳履歴を検索..."
         className="history-search-input"
       />
@@ -35,11 +35,7 @@ const HistorySearch: React.FC<HistorySearchProps> = ({ onSearch, initialValue = 
         検索
       </button>
       {searchQuery && (
-        <button
-          type="button"
-          className="history-search-clear"
-          onClick={handleClear}
-        >
+        <button type="button" className="history-search-clear" onClick={handleClear}>
           クリア
         </button>
       )}

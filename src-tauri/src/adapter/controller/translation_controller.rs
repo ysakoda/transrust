@@ -9,9 +9,12 @@ pub async fn translate(
     text: String,
     source_lang: Option<String>,
     target_lang: String,
+    provider: Option<String>,
     use_case: State<'_, Arc<TranslateTextUseCase>>,
 ) -> Result<Translation, String> {
-    use_case.execute(text, source_lang, target_lang).await
+    use_case
+        .execute(text, source_lang, target_lang, provider)
+        .await
 }
 
 #[tauri::command]

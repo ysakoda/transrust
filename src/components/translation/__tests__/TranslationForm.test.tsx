@@ -1,10 +1,20 @@
 import { describe, it, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { renderWithProviders } from '../../../test/test-utils';
 import TranslationForm from '../TranslationForm';
 
 describe('TranslationForm', () => {
   it('renders with basic elements', () => {
-    render(<TranslationForm onTranslate={() => {}} isLoading={false} />);
+    const preloadedState = {
+      apiKeys: {
+        apiKeys: [{ id: 1, provider: 'deepl', key: 'test-key', is_active: true }],
+        loading: false,
+        error: null,
+      },
+    };
+
+    renderWithProviders(<TranslationForm onTranslate={() => {}} isLoading={false} />, {
+      preloadedState,
+    });
 
     const button = document.querySelector('button');
     expect(button).not.toBeNull();

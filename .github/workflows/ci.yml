@@ -49,8 +49,8 @@ jobs:
       - name: Frontend Style Check
         run: npm run style
 
-      # - name: Frontend Tests
-      #   run: npm run test
+      - name: Frontend Tests
+        run: npm run test
 
       - name: Rust Security Audit
         run: npm run audit:rust

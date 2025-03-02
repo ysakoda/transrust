@@ -10,11 +10,7 @@ interface HistoryDetailProps {
   onDelete: () => void;
 }
 
-const HistoryDetail: React.FC<HistoryDetailProps> = ({
-  translation,
-  onClose,
-  onDelete,
-}) => {
+const HistoryDetail: React.FC<HistoryDetailProps> = ({ translation, onClose, onDelete }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [isEditing, setIsEditing] = useState(false);
 

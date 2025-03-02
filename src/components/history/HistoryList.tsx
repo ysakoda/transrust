@@ -27,7 +27,7 @@ const HistoryList: React.FC<HistoryListProps> = ({
 
   return (
     <div className="history-list">
-      {translations.map((translation) => (
+      {translations.map(translation => (
         <HistoryItem
           key={translation.id}
           translation={translation}
