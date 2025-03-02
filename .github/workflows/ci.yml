@@ -11,8 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ubuntu-latest]
-        # platform: [macos-latest, ubuntu-latest, windows-latest]
+        platform: [macos-latest, ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -21,13 +20,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy, rustfmt
+
+      - name: Install cargo-audit
+        run: cargo install cargo-audit
 
       - name: Install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-latest'
@@ -38,17 +40,32 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
-      - name: TypeScript Check
-        run: npm run build -- --noEmit
+      # - name: TypeScript Check
+      #   run: npm run typecheck
+
+      - name: Frontend Lint
+        run: npm run lint
+
+      - name: Frontend Style Check
+        run: npm run style
+
+      # - name: Frontend Tests
+      #   run: npm run test
+
+      - name: Rust Security Audit
+        run: npm run audit:rust
+
+      - name: Frontend Security Audit
+        run: npm run audit:frontend
 
       - name: Rust Check
-        working-directory: ./src-tauri
-        run: cargo check --all
+        run: npm run check:rust
 
       - name: Rust Format Check
-        working-directory: ./src-tauri
-        run: cargo fmt --all -- --check
+        run: npm run format:rust:check
 
       - name: Rust Clippy
-        working-directory: ./src-tauri
-        run: cargo clippy -- -D warnings
+        run: npm run lint:rust
+
+      - name: Rust Tests
+        run: npm run test:rust

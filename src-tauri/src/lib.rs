@@ -37,7 +37,7 @@ pub fn run() {
         .setup(|app| {
             let config = app.config();
 
-            let db = Arc::new(Database::new(&config).expect("データベースの初期化に失敗しました"));
+            let db = Arc::new(Database::new(config).expect("データベースの初期化に失敗しました"));
 
             let translation_repo = Arc::new(SqliteTranslationRepository::new(db.clone()));
             let api_key_repo = Arc::new(SqliteApiKeyRepository::new(db.clone()));

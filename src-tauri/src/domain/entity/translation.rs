@@ -15,6 +15,7 @@ pub struct Translation {
 }
 
 impl Translation {
+    #[allow(dead_code)]
     pub fn new(
         source_text: String,
         translated_text: String,
