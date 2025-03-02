@@ -1,113 +1,421 @@
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
+/* =====================
+   1. 基本スタイル
+   ===================== */
+* {
+  box-sizing: border-box;
 }
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafb);
-}
-
-:root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-  color: #0f0f0f;
-  background-color: #f6f6f6;
-  font-synthesis: none;
-  text-rendering: optimizelegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-size-adjust: 100%;
-}
-
-.container {
+body,
+html {
   margin: 0;
-  padding-top: 10vh;
+  padding: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
+  background-color: #1e1e2e;
+  color: #e2e2e2;
+}
+
+/* =====================
+   2. アプリレイアウト
+   ===================== */
+.app {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  min-height: 100vh;
+}
+
+.app-header {
+  background-color: #181825;
+  padding: 1rem 0;
   text-align: center;
+  border-bottom: 1px solid #313244;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: 0.75s;
+.app-header h1 {
+  margin: 0;
+  color: #cba6f7;
+  font-size: 1.8rem;
 }
 
-.logo.tauri:hover {
-  filter: drop-shadow(0 0 2em #24c8db);
+.app-content {
+  flex: 1;
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 0;
 }
 
-.row {
-  display: flex;
-  justify-content: center;
-}
-
-a {
+/* =====================
+   3. ボタンと入力要素の基本スタイル
+   ===================== */
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #cdd6f4;
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
 }
 
-a:hover {
-  color: #535bf2;
+.form-group {
+  margin-bottom: 1.5rem;
 }
 
-h1 {
-  text-align: center;
+/* セレクト要素の基本スタイル */
+.language-selectors select,
+.form-group select {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  border: 1px solid #45475a;
+  border-radius: 6px;
+  box-sizing: border-box;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3e%3cpath fill='none' stroke='%23a6adc8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 9l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+  transition: all 0.2s ease;
 }
 
-input,
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+/* 入力要素の基本スタイル */
+.form-group input {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  border: 1px solid #45475a;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+/* 言語セレクター特有のスタイル */
+.language-selectors select {
+  margin: 0 0.5rem;
+  min-width: 120px;
+  padding: 0.6rem;
+  padding-right: 2.5rem;
+}
+
+/* ボタンの基本スタイル */
+.translation-form button,
+.api-key-notice button,
+.form-actions button,
+.edit-button {
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
   font-weight: 500;
-  font-family: inherit;
-  color: #0f0f0f;
-  background-color: #fff;
-  transition: border-color 0.25s;
-  box-shadow: 0 2px 2px rgb(0 0 0 / 20%);
-  outline: none;
-}
-
-button {
   cursor: pointer;
+  border: none;
+  transition: all 0.2s;
 }
 
-button:hover {
-  border-color: #396cd8;
+/* 翻訳フォームボタン特有のスタイル */
+.translation-form button {
+  background-color: #f38ba8;
+  color: #1a1b26;
+  font-weight: 600;
+  font-size: 1rem;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgb(243 139 168 / 40%);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-button:active {
-  border-color: #396cd8;
-  background-color: #e8e8e8;
+/* APIキー通知ボタン特有のスタイル */
+.api-key-notice button {
+  background-color: #f38ba8;
+  color: #1a1b26;
 }
 
-#greet-input {
-  margin-right: 5px;
+/* フォームアクションボタンの配置 */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #f6f6f6;
-    background-color: #2f2f2f;
-  }
+/* フォームアクションの標準ボタン */
+.form-actions button[type='button'] {
+  background-color: #313244;
+  color: #cdd6f4;
+  border: 1px solid #45475a;
+}
 
-  a:hover {
-    color: #24c8db;
-  }
+/* フォームアクションの送信ボタン */
+.form-actions button[type='submit'] {
+  background-color: #a6e3a1;
+  color: #1a1b26;
+}
 
-  input,
-  button {
-    color: #fff;
-    background-color: #0f0f0f98;
-  }
+/* 編集ボタン特有のスタイル */
+.edit-button {
+  background-color: #a6e3a1;
+  color: #1a1b26;
+}
 
-  button:active {
-    background-color: #0f0f0f69;
-  }
+/* ホバーとフォーカスの状態 */
+.language-selectors select:hover,
+.form-group select:hover,
+.form-group input:hover {
+  border-color: #89b4fa;
+}
+
+.language-selectors select:focus,
+.form-group select:focus,
+.form-group input:focus {
+  outline: none;
+  border-color: #89b4fa;
+  box-shadow: 0 0 0 2px rgb(137 180 250 / 30%);
+}
+
+.translation-form button:hover {
+  background-color: #f5c2e7;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgb(245 194 231 / 50%);
+}
+
+.translation-form button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 4px rgb(243 139 168 / 40%);
+}
+
+.api-key-notice button:hover {
+  background-color: #f5c2e7;
+}
+
+.form-actions button[type='button']:hover {
+  background-color: #45475a;
+}
+
+.form-actions button[type='submit']:hover {
+  background-color: #94e2d5;
+}
+
+.edit-button:hover {
+  background-color: #94e2d5;
+}
+
+/* 無効状態 */
+.translation-form button:disabled,
+.form-actions button:disabled {
+  background-color: #45475a;
+  color: #7f849c;
+  cursor: not-allowed;
+}
+
+.translation-form button:disabled {
+  box-shadow: none;
+  transform: none;
+}
+
+/* =====================
+   4. レイアウト要素
+   ===================== */
+.translation-page {
+  background-color: #2a2a3c;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+}
+
+.translation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #44465a;
+  padding-bottom: 1rem;
+}
+
+.translation-header h2 {
+  margin: 0;
+  color: #f5e0dc;
+}
+
+.settings-button {
+  background-color: #7aa2f7;
+  color: #1a1b26;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.settings-button:hover {
+  background-color: #89b4fa;
+}
+
+/* =====================
+   5. 翻訳フォーム
+   ===================== */
+.translation-form {
+  margin-bottom: 1.5rem;
+}
+
+.form-controls {
+  margin-bottom: 1rem;
+}
+
+.language-selectors {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+.arrow-icon {
+  color: #89b4fa;
+  font-weight: bold;
+}
+
+.translation-form textarea {
+  width: 100%;
+  background-color: #313244;
+  color: #cdd6f4;
+  border: 1px solid #45475a;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  resize: vertical;
+  min-height: 120px;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+}
+
+.translation-form textarea:focus {
+  outline: none;
+  border-color: #89b4fa;
+  box-shadow: 0 0 0 2px rgb(137 180 250 / 30%);
+}
+
+/* =====================
+   6. API キー関連
+   ===================== */
+.api-key-notice {
+  text-align: center;
+  padding: 2rem;
+  background-color: #313244;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.api-key-notice p {
+  margin-bottom: 1.5rem;
+  color: #f5e0dc;
+  font-size: 1.1rem;
+}
+
+.api-key-form {
+  background-color: #313244;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.api-key-form h3 {
+  color: #f5e0dc;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #45475a;
+  padding-bottom: 0.8rem;
+}
+
+/* =====================
+   7. 翻訳結果
+   ===================== */
+.translation-result {
+  margin-top: 1.5rem;
+  background-color: #313244;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #45475a;
+  padding-bottom: 0.8rem;
+}
+
+.result-header h3 {
+  margin: 0;
+  color: #f5e0dc;
+}
+
+.result-content {
+  background-color: #1e1e2e;
+  border-radius: 6px;
+  padding: 1.2rem;
+  margin: 1rem 0;
+  line-height: 1.6;
+  color: #cdd6f4;
+}
+
+.result-meta {
+  font-size: 0.9rem;
+  color: #a6adc8;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* =====================
+   8. 翻訳編集フォーム
+   ===================== */
+.translation-edit-form {
+  margin-top: 1.5rem;
+  background-color: #313244;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.translation-edit-form h3 {
+  color: #f5e0dc;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #45475a;
+  padding-bottom: 0.8rem;
+}
+
+.translation-edit-form .form-group textarea {
+  width: 100%;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  border: 1px solid #45475a;
+  border-radius: 6px;
+  padding: 1rem;
+  resize: vertical;
+  min-height: 100px;
+  box-sizing: border-box;
+}
+
+.translation-edit-form .form-group select {
+  min-width: 200px;
+}
+
+/* =====================
+   9. エラーメッセージ
+   ===================== */
+.error-message {
+  background-color: rgb(243 139 168 / 20%);
+  color: #f38ba8;
+  padding: 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #f38ba8;
 }

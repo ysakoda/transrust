@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../store';
-import { translateText, fetchTranslationHistory } from '../store/slices/translationSlice';
+import {
+  translateText,
+  fetchTranslationHistory,
+  updateTranslation,
+  Translation as TranslationType,
+} from '../store/slices/translationSlice';
 import { RootState } from '../store/rootReducer';
 import { fetchApiKeys, registerApiKey } from '../store/slices/apiKeySlice';
 import TranslationForm from '../components/translation/TranslationForm';
@@ -30,6 +35,20 @@ const Translation: React.FC = () => {
     setShowApiKeyForm(false);
   };
 
+  const handleEditTranslation = (editedTranslation: TranslationType) => {
+    if (editedTranslation.id) {
+      dispatch(
+        updateTranslation({
+          id: editedTranslation.id,
+          source_text: editedTranslation.source_text,
+          translated_text: editedTranslation.translated_text,
+          source_language: editedTranslation.source_language,
+          target_language: editedTranslation.target_language,
+        })
+      );
+    }
+  };
+
   const hasDeeplApiKey = apiKeys.some(key => key.provider === 'deepl' && key.is_active);
 
   return (
@@ -43,9 +62,17 @@ const Translation: React.FC = () => {
         <ApiKeyForm onSubmit={handleSubmitApiKey} onCancel={() => setShowApiKeyForm(false)} />
       ) : (
         <>
+          <div className="translation-header">
+            <h2>翻訳</h2>
+            <button className="settings-button" onClick={() => setShowApiKeyForm(true)}>
+              API キー設定
+            </button>
+          </div>
           <TranslationForm onTranslate={handleTranslate} isLoading={loading} />
           {error && <div className="error-message">{error}</div>}
-          {currentTranslation && <TranslationResult translation={currentTranslation} />}
+          {currentTranslation && (
+            <TranslationResult translation={currentTranslation} onEdit={handleEditTranslation} />
+          )}
         </>
       )}
     </div>

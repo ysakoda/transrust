@@ -53,6 +53,39 @@ export const deleteTranslation = createAsyncThunk('translation/delete', async (i
   return { id, success };
 });
 
+export const updateTranslation = createAsyncThunk(
+  'translation/update',
+  async ({
+    id,
+    source_text,
+    translated_text,
+    source_language,
+    target_language,
+  }: {
+    id: number;
+    source_text: string;
+    translated_text: string;
+    source_language: string;
+    target_language: string;
+  }) => {
+    const success = await invoke<boolean>('update_translation', {
+      id,
+      source_text,
+      translated_text,
+      source_lang: source_language,
+      target_lang: target_language,
+    });
+    return {
+      id,
+      source_text,
+      translated_text,
+      source_language,
+      target_language,
+      success,
+    };
+  }
+);
+
 const translationSlice = createSlice({
   name: 'translation',
   initialState,
@@ -70,7 +103,6 @@ const translationSlice = createSlice({
       .addCase(translateText.fulfilled, (state, action) => {
         state.currentTranslation = action.payload;
         state.loading = false;
-        // 履歴に追加（既存の場合は更新）
         const index = state.history.findIndex(item => item.id === action.payload.id);
         if (index >= 0) {
           state.history[index] = action.payload;
@@ -100,6 +132,32 @@ const translationSlice = createSlice({
           if (state.currentTranslation?.id === action.payload.id) {
             state.currentTranslation = null;
           }
+        }
+      })
+      .addCase(updateTranslation.fulfilled, (state, action) => {
+        if (action.payload.success) {
+          if (state.currentTranslation?.id === action.payload.id) {
+            state.currentTranslation = {
+              ...state.currentTranslation,
+              source_text: action.payload.source_text,
+              translated_text: action.payload.translated_text,
+              source_language: action.payload.source_language,
+              target_language: action.payload.target_language,
+            };
+          }
+
+          state.history = state.history.map(item => {
+            if (item.id === action.payload.id) {
+              return {
+                ...item,
+                source_text: action.payload.source_text,
+                translated_text: action.payload.translated_text,
+                source_language: action.payload.source_language,
+                target_language: action.payload.target_language,
+              };
+            }
+            return item;
+          });
         }
       });
   },

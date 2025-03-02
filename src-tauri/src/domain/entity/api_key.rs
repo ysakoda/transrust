@@ -1,5 +1,3 @@
-// src-tauri/src/domain/entity/api_key.rs
-// APIキーエンティティの定義
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

@@ -164,6 +164,41 @@ impl TranslationRepository for SqliteTranslationRepository {
         Ok(translations)
     }
 
+    async fn update(&self, translation: &Translation) -> Result<bool, String> {
+        let connection = self.db.get_connection();
+        let conn = connection.lock().unwrap();
+
+        let id = translation
+            .id
+            .ok_or_else(|| "IDが指定されていません".to_string())?;
+
+        let timestamp = Self::system_time_to_timestamp(translation.created_at);
+
+        let affected = conn
+            .execute(
+                "UPDATE translations SET
+                    source_text = ?1,
+                    translated_text = ?2,
+                    source_language = ?3,
+                    target_language = ?4,
+                    created_at = ?5,
+                    api_source = ?6
+                 WHERE id = ?7",
+                params![
+                    translation.source_text,
+                    translation.translated_text,
+                    translation.source_language,
+                    translation.target_language,
+                    timestamp,
+                    translation.api_source,
+                    id
+                ],
+            )
+            .map_err(|e| format!("翻訳更新エラー: {}", e))?;
+
+        Ok(affected > 0)
+    }
+
     async fn delete(&self, id: i64) -> Result<bool, String> {
         let connection = self.db.get_connection();
         let conn = connection.lock().unwrap();
