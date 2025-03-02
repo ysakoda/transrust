@@ -39,7 +39,7 @@ export const translateText = createAsyncThunk(
     return await invoke<Translation>('translate', {
       text,
       source_lang: sourceLang,
-      target_lang: targetLang,
+      targetLang,
     });
   }
 );
