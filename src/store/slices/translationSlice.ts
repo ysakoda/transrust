@@ -48,6 +48,13 @@ export const fetchTranslationHistory = createAsyncThunk('translation/fetchHistor
   return await invoke<Translation[]>('get_translation_history');
 });
 
+export const searchTranslations = createAsyncThunk(
+  'translation/search',
+  async ({ text, limit = 100 }: { text: string; limit: number }) => {
+    return await invoke<Translation[]>('search_translations', { text, limit });
+  }
+);
+
 export const deleteTranslation = createAsyncThunk('translation/delete', async (id: number) => {
   const success = await invoke<boolean>('delete_translation', { id });
   return { id, success };
@@ -125,6 +132,18 @@ const translationSlice = createSlice({
       .addCase(fetchTranslationHistory.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || '翻訳履歴の取得に失敗しました';
+      })
+      .addCase(searchTranslations.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(searchTranslations.fulfilled, (state, action) => {
+        state.history = action.payload;
+        state.loading = false;
+      })
+      .addCase(searchTranslations.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || '検索に失敗しました';
       })
       .addCase(deleteTranslation.fulfilled, (state, action) => {
         if (action.payload.success) {

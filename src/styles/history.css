@@ -1,0 +1,335 @@
+/* =====================
+   1. 履歴ページの基本スタイル
+   ===================== */
+.history-page {
+  background-color: #2a2a3c;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #44465a;
+  padding-bottom: 1rem;
+}
+
+.history-header h2 {
+  margin: 0;
+  color: #f5e0dc;
+}
+
+.history-content {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.history-list-container {
+  flex: 1;
+  min-width: 0;
+}
+
+.history-detail-container {
+  flex: 1;
+  min-width: 0;
+}
+
+/* =====================
+   2. 検索フォーム
+   ===================== */
+.history-search {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.history-search-input {
+  flex: 1;
+  padding: 0.8rem;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  border: 1px solid #45475a;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.history-search-button {
+  background-color: #89b4fa;
+  color: #1a1b26;
+  border: none;
+  border-radius: 6px;
+  padding: 0 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.history-search-clear {
+  background-color: #45475a;
+  color: #cdd6f4;
+  border: none;
+  border-radius: 6px;
+  padding: 0 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.history-search-button:hover {
+  background-color: #74c7ec;
+}
+
+.history-search-clear:hover {
+  background-color: #585b70;
+}
+
+.history-search-input:focus {
+  outline: none;
+  border-color: #89b4fa;
+  box-shadow: 0 0 0 2px rgb(137 180 250 / 30%);
+}
+
+/* =====================
+   3. 履歴リスト
+   ===================== */
+.history-list {
+  background-color: #1e1e2e;
+  border-radius: 8px;
+  overflow: hidden;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.history-empty,
+.history-loading {
+  text-align: center;
+  padding: 2rem;
+  color: #a6adc8;
+  font-style: italic;
+}
+
+/* =====================
+   4. 履歴アイテム
+   ===================== */
+.history-item {
+  padding: 1rem;
+  border-bottom: 1px solid #313244;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.history-item:hover {
+  background-color: #313244;
+}
+
+.history-item.selected {
+  background-color: rgb(137 180 250 / 20%);
+  border-left: 4px solid #89b4fa;
+}
+
+.history-item-date {
+  font-size: 0.85rem;
+  color: #a6adc8;
+  margin-bottom: 0.3rem;
+}
+
+.history-item-languages {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #89b4fa;
+  margin-bottom: 0.5rem;
+}
+
+.history-item-source,
+.history-item-translation {
+  margin-bottom: 0.4rem;
+  overflow-wrap: break-word;
+}
+
+.history-item-source {
+  color: #cdd6f4;
+}
+
+.history-item-translation {
+  color: #a6e3a1;
+}
+
+.history-item-provider {
+  font-size: 0.85rem;
+  color: #a6adc8;
+  margin-top: 0.5rem;
+}
+
+.history-item-delete {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: #f38ba8;
+  color: #1a1b26;
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.history-item-delete:hover {
+  background-color: #f5c2e7;
+}
+
+.history-item:hover .history-item-delete {
+  opacity: 1;
+}
+
+/* =====================
+   5. 詳細表示
+   ===================== */
+.history-detail {
+  background-color: #313244;
+  border-radius: 8px;
+  height: 100%;
+}
+
+.history-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #45475a;
+}
+
+.history-detail-header h3 {
+  margin: 0;
+  color: #f5e0dc;
+}
+
+.history-detail-close {
+  background: none;
+  border: none;
+  color: #cdd6f4;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.history-detail-close:hover {
+  color: #f5e0dc;
+  text-decoration: underline;
+}
+
+.history-detail-content {
+  padding: 1rem;
+}
+
+.history-detail-meta {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #45475a;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: #a6adc8;
+}
+
+.detail-label {
+  font-weight: 500;
+  margin-right: 0.5rem;
+  color: #cdd6f4;
+}
+
+.history-detail-source,
+.history-detail-translation {
+  margin-bottom: 1.5rem;
+}
+
+.history-detail-source h4,
+.history-detail-translation h4 {
+  color: #f5e0dc;
+  margin: 0 0 0.5rem;
+}
+
+.detail-text {
+  background-color: #1e1e2e;
+  padding: 1rem;
+  border-radius: 6px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  line-height: 1.6;
+}
+
+.history-detail-source .detail-text {
+  color: #cdd6f4;
+}
+
+.history-detail-translation .detail-text {
+  color: #a6e3a1;
+}
+
+.history-detail-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.history-detail .edit-button {
+  background-color: #a6e3a1;
+  color: #1a1b26;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.history-detail .delete-button {
+  background-color: #f38ba8;
+  color: #1a1b26;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.history-detail .edit-button:hover {
+  background-color: #94e2d5;
+}
+
+.history-detail .delete-button:hover {
+  background-color: #f5c2e7;
+}
+
+/* =====================
+   6. ナビゲーション
+   ===================== */
+.app-nav {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  color: #a6adc8;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.nav-button:hover {
+  color: #cdd6f4;
+  background-color: rgb(166 173 200 / 10%);
+}
+
+.nav-button.active {
+  color: #cba6f7;
+  border-bottom: 2px solid #cba6f7;
+}

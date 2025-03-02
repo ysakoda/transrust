@@ -40,8 +40,8 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
-      # - name: TypeScript Check
-      #   run: npm run typecheck
+      - name: TypeScript Check
+        run: npm run typecheck
 
       - name: Frontend Lint
         run: npm run lint
