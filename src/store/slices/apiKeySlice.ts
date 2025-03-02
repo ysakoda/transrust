@@ -40,21 +40,18 @@ export const toggleApiKeyStatus = createAsyncThunk(
   }
 );
 
-export const deleteApiKey = createAsyncThunk(
-  'apiKeys/delete',
-  async (id: number) => {
-    const success = await invoke<boolean>('delete_api_key', { id });
-    return { id, success };
-  }
-);
+export const deleteApiKey = createAsyncThunk('apiKeys/delete', async (id: number) => {
+  const success = await invoke<boolean>('delete_api_key', { id });
+  return { id, success };
+});
 
 const apiKeySlice = createSlice({
   name: 'apiKeys',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchApiKeys.pending, (state) => {
+      .addCase(fetchApiKeys.pending, state => {
         state.loading = true;
         state.error = null;
       })

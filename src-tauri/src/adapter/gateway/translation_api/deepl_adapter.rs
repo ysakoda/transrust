@@ -64,7 +64,8 @@ impl DeepLAdapter {
         }
 
         let translation = &response.translations[0];
-        let source_language = source_lang.unwrap_or_else(|| translation.detected_source_language.clone());
+        let source_language =
+            source_lang.unwrap_or_else(|| translation.detected_source_language.clone());
 
         Ok(Translation {
             id: None,

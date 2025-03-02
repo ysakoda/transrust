@@ -97,7 +97,7 @@ impl TranslationRepository for SqliteTranslationRepository {
                 "SELECT id, source_text, translated_text, source_language,
                         target_language, created_at, api_source
                  FROM translations
-                 ORDER BY created_at DESC"
+                 ORDER BY created_at DESC",
             )
             .map_err(|e| format!("クエリ準備エラー: {}", e))?;
 
@@ -137,7 +137,7 @@ impl TranslationRepository for SqliteTranslationRepository {
                  FROM translations
                  WHERE source_text LIKE ?1 OR translated_text LIKE ?1
                  ORDER BY created_at DESC
-                 LIMIT ?2"
+                 LIMIT ?2",
             )
             .map_err(|e| format!("クエリ準備エラー: {}", e))?;
 

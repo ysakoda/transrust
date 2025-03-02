@@ -22,11 +22,7 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onSubmit, onCancel }) => {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>プロバイダー:</label>
-          <select
-            value={provider}
-            onChange={(e) => setProvider(e.target.value)}
-            required
-          >
+          <select value={provider} onChange={e => setProvider(e.target.value)} required>
             <option value="deepl">DeepL</option>
           </select>
         </div>
@@ -35,7 +31,7 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onSubmit, onCancel }) => {
           <input
             type="text"
             value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
+            onChange={e => setApiKey(e.target.value)}
             placeholder="APIキーを入力してください"
             required
           />
