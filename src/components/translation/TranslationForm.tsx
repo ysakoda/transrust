@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/rootReducer';
 
 interface TranslationFormProps {
-  onTranslate: (text: string, sourceLang: string | undefined, targetLang: string) => void;
+  onTranslate: (text: string, sourceLang: string | undefined, targetLang: string, provider: string) => void;
   isLoading: boolean;
 }
 
@@ -9,17 +11,36 @@ const TranslationForm: React.FC<TranslationFormProps> = ({ onTranslate, isLoadin
   const [sourceText, setSourceText] = useState('');
   const [sourceLang, setSourceLang] = useState<string | undefined>(undefined);
   const [targetLang, setTargetLang] = useState('EN');
+  const [provider, setProvider] = useState('deepl');
+
+  const { apiKeys } = useSelector((state: RootState) => state.apiKeys);
+  const availableProviders = apiKeys.filter(key => key.is_active);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (sourceText.trim()) {
-      onTranslate(sourceText, sourceLang, targetLang);
+      onTranslate(sourceText, sourceLang, targetLang, provider);
     }
   };
 
   return (
     <form className="translation-form" onSubmit={handleSubmit}>
       <div className="form-controls">
+        <div className="provider-selector">
+          <label>翻訳サービス:</label>
+          <select
+            value={provider}
+            onChange={e => setProvider(e.target.value)}
+            disabled={availableProviders.length <= 1}
+          >
+            {availableProviders.map(key => (
+              <option key={key.provider} value={key.provider}>
+                {key.provider === 'deepl' ? 'DeepL' : key.provider === 'google' ? 'Google翻訳' : key.provider}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="language-selectors">
           <select
             value={sourceLang || ''}
