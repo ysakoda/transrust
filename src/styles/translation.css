@@ -86,7 +86,6 @@
   box-shadow: 0 0 0 2px rgb(137 180 250 / 30%);
 }
 
-/* 翻訳フォームボタン特有のスタイル */
 .translation-form button {
   background-color: #f38ba8;
   color: #1a1b26;
@@ -121,6 +120,157 @@
   cursor: not-allowed;
   box-shadow: none;
   transform: none;
+}
+
+.provider-selector {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.provider-selector label {
+  color: #cdd6f4;
+  font-weight: 500;
+}
+
+.provider-selector select {
+  min-width: 150px;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  border: 1px solid #45475a;
+  border-radius: 6px;
+  padding: 0.6rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3e%3cpath fill='none' stroke='%23a6adc8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 9l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+}
+
+.provider-selector select:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* プロバイダー選択カードのスタイル */
+.provider-heading {
+  color: #cdd6f4;
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+}
+
+.provider-selector-cards {
+  margin-bottom: 1.5rem;
+}
+
+.provider-cards {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.provider-card {
+  flex: 1;
+  min-width: 200px;
+  background-color: #313244;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.provider-card:hover {
+  background-color: #44465a;
+}
+
+.provider-card.selected {
+  border-color: #89b4fa;
+  background-color: rgb(137 180 250 / 10%);
+}
+
+.provider-card.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.provider-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.provider-card-header h4 {
+  margin: 0;
+  color: #f5e0dc;
+  font-size: 1.1rem;
+}
+
+.provider-status {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.provider-status .status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.provider-status.active .status-indicator {
+  background-color: #a6e3a1;
+}
+
+.provider-status.inactive .status-indicator {
+  background-color: #f38ba8;
+}
+
+.provider-status.active {
+  color: #a6e3a1;
+}
+
+.provider-status.inactive {
+  color: #f38ba8;
+}
+
+.provider-card-content {
+  color: #a6adc8;
+  font-size: 0.9rem;
+}
+
+.provider-description {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.provider-selected-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: #89b4fa;
+  color: #1a1b26;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.no-provider-warning {
+  color: #f38ba8;
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
 }
 
 /* =====================

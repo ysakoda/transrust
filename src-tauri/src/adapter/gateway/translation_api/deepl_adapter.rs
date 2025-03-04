@@ -1,4 +1,6 @@
+use crate::adapter::gateway::translation_api::provider_trait::TranslationProvider;
 use crate::domain::entity::translation::Translation;
+use async_trait::async_trait;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use std::error::Error;
@@ -36,8 +38,11 @@ impl DeepLAdapter {
             api_key,
         }
     }
+}
 
-    pub async fn translate(
+#[async_trait]
+impl TranslationProvider for DeepLAdapter {
+    async fn translate(
         &self,
         text: String,
         source_lang: Option<String>,

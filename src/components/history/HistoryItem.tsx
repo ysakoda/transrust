@@ -36,16 +36,15 @@ const HistoryItem: React.FC<HistoryItemProps> = ({
   };
 
   return (
-    <div
-      className={`history-item ${isSelected ? 'selected' : ''}`}
-      onClick={onClick}
-    >
+    <div className={`history-item ${isSelected ? 'selected' : ''}`} onClick={onClick}>
       <div className="history-item-date">{formatDate(translation.created_at)}</div>
       <div className="history-item-languages">
         {translation.source_language} → {translation.target_language}
       </div>
       <div className="history-item-source">{truncateText(translation.source_text, 60)}</div>
-      <div className="history-item-translation">{truncateText(translation.translated_text, 60)}</div>
+      <div className="history-item-translation">
+        {truncateText(translation.translated_text, 60)}
+      </div>
       <div className="history-item-provider">{translation.api_source}</div>
       <button className="history-item-delete" onClick={handleDeleteClick}>
         削除

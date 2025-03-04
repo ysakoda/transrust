@@ -75,7 +75,9 @@ const History: React.FC = () => {
             <HistoryDetail
               translation={selectedTranslation}
               onClose={handleCloseDetail}
-              onDelete={() => selectedTranslation.id && handleDeleteTranslation(selectedTranslation.id)}
+              onDelete={() =>
+                selectedTranslation.id && handleDeleteTranslation(selectedTranslation.id)
+              }
             />
           </div>
         )}

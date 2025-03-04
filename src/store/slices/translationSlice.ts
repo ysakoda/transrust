@@ -31,15 +31,18 @@ export const translateText = createAsyncThunk(
     text,
     sourceLang,
     targetLang,
+    provider,
   }: {
     text: string;
     sourceLang?: string;
     targetLang: string;
+    provider?: string;
   }) => {
     return await invoke<Translation>('translate', {
       text,
       source_lang: sourceLang,
       targetLang,
+      provider,
     });
   }
 );
@@ -133,7 +136,7 @@ const translationSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || '翻訳履歴の取得に失敗しました';
       })
-      .addCase(searchTranslations.pending, (state) => {
+      .addCase(searchTranslations.pending, state => {
         state.loading = true;
         state.error = null;
       })

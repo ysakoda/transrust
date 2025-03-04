@@ -1,4 +1,6 @@
-use crate::adapter::gateway::translation_api::deepl_adapter::DeepLAdapter;
+use crate::adapter::gateway::translation_api::provider_factory::{
+    ProviderType, TranslationProviderFactory,
+};
 use crate::domain::entity::translation::Translation;
 use crate::domain::repository::api_key_repository::ApiKeyRepository;
 use crate::domain::repository::translation_repository::TranslationRepository;
@@ -25,19 +27,28 @@ impl TranslateTextUseCase {
         text: String,
         source_lang: Option<String>,
         target_lang: String,
+        provider_name: Option<String>,
     ) -> Result<Translation, String> {
+        let provider_name = provider_name.unwrap_or_else(|| "deepl".to_string());
+
+        let provider_type = match provider_name.to_lowercase().as_str() {
+            "google" => ProviderType::Google,
+            _ => ProviderType::DeepL,
+        };
+
         let api_key = self
             .api_key_repository
-            .find_by_provider("deepl")
+            .find_by_provider(&provider_name)
             .await?
-            .ok_or_else(|| "DeepL API キーが設定されていません".to_string())?;
+            .ok_or_else(|| format!("{} API キーが設定されていません", provider_name))?;
 
         if !api_key.is_active {
-            return Err("DeepL API キーが無効になっています".to_string());
+            return Err(format!("{} API キーが無効になっています", provider_name));
         }
 
-        let deepl_adapter = DeepLAdapter::new(api_key.key);
-        let translation = deepl_adapter
+        let provider = TranslationProviderFactory::create_provider(provider_type, api_key.key);
+
+        let translation = provider
             .translate(text, source_lang, target_lang)
             .await
             .map_err(|e| format!("翻訳エラー: {}", e))?;
