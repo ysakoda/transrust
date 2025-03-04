@@ -1,12 +1,14 @@
+// src/App.tsx
 import { Provider } from 'react-redux';
 import { useState } from 'react';
 import store from './store';
 import './App.css';
 import Translation from './pages/Translation';
 import History from './pages/History';
+import Settings from './pages/Settings';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'translation' | 'history'>('translation');
+  const [activeTab, setActiveTab] = useState<'translation' | 'history' | 'settings'>('translation');
 
   return (
     <Provider store={store}>
@@ -26,10 +28,22 @@ function App() {
             >
               履歴
             </button>
+            <button
+              className={`nav-button ${activeTab === 'settings' ? 'active' : ''}`}
+              onClick={() => setActiveTab('settings')}
+            >
+              設定
+            </button>
           </nav>
         </header>
         <main className="app-content">
-          {activeTab === 'translation' ? <Translation /> : <History />}
+          {activeTab === 'translation' ? (
+            <Translation />
+          ) : activeTab === 'history' ? (
+            <History />
+          ) : (
+            <Settings />
+          )}
         </main>
       </div>
     </Provider>

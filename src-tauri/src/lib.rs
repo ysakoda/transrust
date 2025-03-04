@@ -7,18 +7,21 @@ use adapter::controller::{
     api_key_controller::{
         delete_api_key, get_all_api_keys, get_api_key, register_api_key, toggle_api_key_status,
     },
+    settings_controller::{get_settings, save_settings},
     translation_controller::{
         delete_translation, get_translation_by_id, get_translation_history, search_translations,
         translate, update_translation,
     },
 };
 use application::usecase::{
-    manage_api_key::ManageApiKeyUseCase, translate_text::TranslateTextUseCase,
+    manage_api_key::ManageApiKeyUseCase, manage_settings::ManageSettingsUseCase,
+    translate_text::TranslateTextUseCase,
 };
 use infrastructure::{
     database::sqlite::Database,
     repository::{
         sqlite_api_key_repository::SqliteApiKeyRepository,
+        sqlite_settings_repository::SqliteSettingsRepository,
         sqlite_translation_repository::SqliteTranslationRepository,
     },
 };
@@ -41,12 +44,15 @@ pub fn run() {
 
             let translation_repo = Arc::new(SqliteTranslationRepository::new(db.clone()));
             let api_key_repo = Arc::new(SqliteApiKeyRepository::new(db.clone()));
+            let settings_repo = Arc::new(SqliteSettingsRepository::new(db.clone()));
 
             let manage_api_key_use_case = Arc::new(ManageApiKeyUseCase::new(api_key_repo.clone()));
             let translate_text_use_case = Arc::new(TranslateTextUseCase::new(
                 translation_repo.clone(),
                 api_key_repo.clone(),
             ));
+            let manage_settings_use_case =
+                Arc::new(ManageSettingsUseCase::new(settings_repo.clone()));
 
             app.manage(
                 translation_repo
@@ -55,8 +61,13 @@ pub fn run() {
             app.manage(
                 api_key_repo as Arc<dyn domain::repository::api_key_repository::ApiKeyRepository>,
             );
+            app.manage(
+                settings_repo
+                    as Arc<dyn domain::repository::settings_repository::SettingsRepository>,
+            );
             app.manage(manage_api_key_use_case);
             app.manage(translate_text_use_case);
+            app.manage(manage_settings_use_case);
 
             Ok(())
         })
@@ -72,7 +83,9 @@ pub fn run() {
             get_translation_by_id,
             search_translations,
             delete_translation,
-            update_translation
+            update_translation,
+            get_settings,
+            save_settings
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
