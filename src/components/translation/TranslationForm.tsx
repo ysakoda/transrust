@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import { ApiKey } from '../../store/slices/apiKeySlice';
@@ -14,13 +14,19 @@ interface TranslationFormProps {
 }
 
 const TranslationForm: React.FC<TranslationFormProps> = ({ onTranslate, isLoading }) => {
-  const [sourceText, setSourceText] = useState('');
-  const [sourceLang, setSourceLang] = useState<string | undefined>(undefined);
-  const [targetLang, setTargetLang] = useState('EN');
-  const [provider, setProvider] = useState('deepl');
-
   const { apiKeys } = useSelector((state: RootState) => state.apiKeys);
-  const availableProviders = apiKeys.filter(key => key.is_active);
+  const { settings } = useSelector((state: RootState) => state.settings);
+
+  const [sourceText, setSourceText] = useState('');
+  const [sourceLang, setSourceLang] = useState<string | undefined>(settings.defaultSourceLanguage);
+  const [targetLang, setTargetLang] = useState(settings.defaultTargetLanguage);
+  const [provider, setProvider] = useState(settings.defaultProvider);
+
+  useEffect(() => {
+    setSourceLang(settings.defaultSourceLanguage);
+    setTargetLang(settings.defaultTargetLanguage);
+    setProvider(settings.defaultProvider);
+  }, [settings]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,6 +34,8 @@ const TranslationForm: React.FC<TranslationFormProps> = ({ onTranslate, isLoadin
       onTranslate(sourceText, sourceLang, targetLang, provider);
     }
   };
+
+  const availableProviders = apiKeys.filter(key => key.is_active);
 
   const renderProviderStatus = (providerKey: ApiKey) => {
     return (
